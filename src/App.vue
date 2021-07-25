@@ -1,25 +1,27 @@
 <template>
   <div class="todo">
     <div class="todo__taskbar">
+      <form action=""></form>
       <input
         type="text"
         class="todo__input"
-        v-model.trim="message"
-        placeholder="Введите задачу..."
-        @keyup.enter.prevent="saveMessage"
+        v-model.trim="title"
+        @keyup.enter.prevent="saveTodo"
       />
+      <textarea
+        name="description"
+        id="description"
+        class="todo__description"
+        v-model.trim="description"
+      >
+      </textarea>
       <div class="todo__btn-wrapper">
-        <button class="todo__btn" @click="saveMessage">Save</button>
-        <button class="todo__btn" @click="deleteAllMsg">Clear All</button>
+        <button class="todo__btn" @click="saveTodo">Save</button>
+        <button class="todo__btn" @click="deleteAllTodos">Clear All</button>
       </div>
     </div>
     <div class="todo__list">
-      <div class="todo__item" v-for="message in savedMessages" :key="message">
-        <p class="todo__msg">
-          {{ message }}
-        </p>
-        <button class="todo__btn" @click="deleteMessage">Delete</button>
-      </div>
+      <todo-item :savedTodos="savedTodos" />
     </div>
   </div>
 </template>
@@ -28,26 +30,32 @@
 export default {
   data() {
     return {
-      message: "",
-      savedMessages: [],
+      count: 0,
+      title: "",
+      description: "",
+      savedTodos: [],
     };
   },
 
   methods: {
-    saveMessage() {
-      if (this.message.length > 0) {
-        this.savedMessages.push(this.message);
-        this.message = "";
+    saveTodo() {
+      let todo = {};
+      if (this.title.length > 0 || this.description.length > 0) {
+        todo["id"] = this.count;
+        todo["title"] = this.title;
+        todo["description"] = this.description;
+
+        this.title = "";
+        this.description = "";
+        this.count++;
+
+        this.savedTodos.push(todo);
       }
     },
 
-    deleteMessage() {
-      const messageId = this.savedMessages.indexOf(this.message);
-      this.savedMessages.splice(messageId, 1);
-    },
-
-    deleteAllMsg() {
-      this.savedMessages = [];
+    deleteAllTodos() {
+      this.savedTodos.splice(0);
+      this.count = 0;
     },
   },
 };
@@ -69,7 +77,7 @@ html {
   margin: 3vh 3vw;
   padding: 50px 0;
 
-  border: 12px solid #207;
+  //border: 12px solid #207;
 
   &__btn-wrapper {
     display: flex;
@@ -100,7 +108,13 @@ html {
       border: red;
     }
   }
+  &__description {
+    min-width: 90%;
+    max-width: 90%;
+    height: 100px;
 
+    border: 3px solid;
+  }
   &__btn {
     width: 120px;
     height: 60px;
@@ -125,26 +139,6 @@ html {
     gap: 4vh;
     width: 30vw;
     padding: 20px;
-  }
-
-  &__item {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    align-items: center;
-
-    padding: 20px;
-
-    border-radius: 10px;
-    border: 1px solid black;
-    border: 3px solid #207;
-  }
-
-  &__msg {
-    width: 100%;
-    word-wrap: break-word;
-
-    font-size: 20px;
   }
 }
 </style>
