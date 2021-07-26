@@ -1,24 +1,14 @@
 <template>
   <div class="todo">
     <div class="todo__taskbar">
-      <form action=""></form>
       <input
         type="text"
         class="todo__input"
+        maxlength="93"
+        placeholder="What do you want to do?"
         v-model.trim="title"
         @keyup.enter.prevent="saveTodo"
       />
-      <textarea
-        name="description"
-        id="description"
-        class="todo__description"
-        v-model.trim="description"
-      >
-      </textarea>
-      <div class="todo__btn-wrapper">
-        <button class="todo__btn" @click="saveTodo">Save</button>
-        <button class="todo__btn" @click="deleteAllTodos">Clear All</button>
-      </div>
     </div>
     <div class="todo__list">
       <todo-item :savedTodos="savedTodos" />
@@ -32,7 +22,7 @@ export default {
     return {
       count: 0,
       title: "",
-      description: "",
+
       savedTodos: [],
     };
   },
@@ -40,16 +30,15 @@ export default {
   methods: {
     saveTodo() {
       let todo = {};
-      if (this.title.length > 0 || this.description.length > 0) {
+      if (this.title.length > 0) {
         todo["id"] = this.count;
         todo["title"] = this.title;
-        todo["description"] = this.description;
-
-        this.title = "";
-        this.description = "";
-        this.count++;
 
         this.savedTodos.push(todo);
+
+        this.title = "";
+
+        this.count++;
       }
     },
 
@@ -62,8 +51,18 @@ export default {
 </script>
 
 <style lang="scss">
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  background: #f5f5f5;
+}
+
 html {
+  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 30px;
+  font-weight: 300;
 }
 
 .todo {
@@ -90,30 +89,29 @@ html {
     gap: 40px;
     align-items: center;
 
-    width: 30vw;
-    margin-bottom: 5vh;
-    padding: 20px;
+    width: 40vw;
 
-    border: 6px solid #207567;
-    border-radius: 10px;
+    //padding: 20px;
+
+    //border: 6px solid #207567;
+    border-radius: 15px;
+
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
   }
 
   &__input {
-    width: 90%;
-    height: 50px;
+    width: 100%;
+    height: 65px;
 
-    border: 3px solid;
+    padding: 0 20px;
+    font-size: 24px;
 
-    &_brd-red {
-      border: red;
-    }
+    border-radius: 15px;
+
+    border: none;
   }
   &__description {
-    min-width: 90%;
-    max-width: 90%;
-    height: 100px;
-
-    border: 3px solid;
+    display: none;
   }
   &__btn {
     width: 120px;
@@ -137,7 +135,7 @@ html {
     display: flex;
     flex-direction: column;
     gap: 4vh;
-    width: 30vw;
+    width: 40vw;
     padding: 20px;
   }
 }
