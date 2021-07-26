@@ -1,6 +1,6 @@
-module.exports = {
-  publicPath: '/toDoApp-Vue/',
-  configureWebpack: {
-    devtool: 'source-map',
-  },
-}
+//module.exports = {
+ // publicPath: '/toDoApp-Vue/',
+  //configureWebpack: {
+  //  devtool: 'source-map',
+  //},
+//}
