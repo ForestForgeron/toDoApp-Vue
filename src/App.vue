@@ -140,7 +140,7 @@ html {
   }
 }
 
-@media screen and(max-width: 760px) {
+@media screen and (max-width: 760px) {
   .todo {
     &__taskbar,
     &__list {
