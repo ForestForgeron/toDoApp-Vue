@@ -104,7 +104,7 @@ html {
     height: 65px;
 
     padding: 0 20px;
-    font-size: 24px;
+    font-size: calc(14px + 10 * (100vw / 1440));
 
     border-radius: 15px;
 
@@ -137,6 +137,15 @@ html {
     gap: 4vh;
     width: 40vw;
     padding: 20px;
+  }
+}
+
+@media screen and(max-width: 760px) {
+  .todo {
+    &__taskbar,
+    &__list {
+      width: 70vw;
+    }
   }
 }
 </style>

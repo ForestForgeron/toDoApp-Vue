@@ -58,12 +58,11 @@ export default {
   }
 }
 
-.title,
-.description {
+.title {
   width: 90%;
   word-wrap: break-word;
 
-  font-size: 24px;
+  font-size: calc(14px + 10 * (100vw / 1440));
   text-align: center;
 }
 .delete-btn {
